@@ -7,14 +7,53 @@ namespace DocsRd.Controllers
     {
         public Object Index()
         {
-            Object result = "DocsRd.Controllers.HomeController.Rd()<br />";
+            Object result = "DocsRd.Controllers.RdController.Index()<br />";
             try
             {
                 Guid.TryParse(Request.Form["sessionId"], out Guid sessionId);
+                String alias = "docs_rd";
+                TempData["fsTreeId"] = String.Format("_{0}_", Guid.NewGuid().ToString("N"));
+                TempData["alias"] = alias;
+                TempData["html"] = "FileTree.RenderDirectoryTree(sessionId, alias, null)";
                 result = PartialView(sessionId);
             }
             catch (Exception e) { result += e.ToString(); }
             return result;
+            /*
+            String alias = "docs_rd";
+            if (Request.Form.Count > 1) // session_id, cmd
+            {
+                Dictionary<String, String> pars = new Dictionary<String, String>(Request.Form.Count);
+                for (int i = 0; i < Request.Form.Count; i++)
+                {
+                    pars.Add(Request.Form.Keys[i], Request.Form.GetValues(i)[0]);
+                }
+                String cmd = pars["cmd"];
+                if (!String.IsNullOrWhiteSpace(cmd))
+                {
+                    switch (cmd)
+                    {
+                        case "GetFsInfo":
+                            String path = Utility.UnEscape(pars["path"]);
+                            String type = pars["type"]; // или "dir" или "file"
+                            DataGridView fileInfo = RdModel.GetFsInfo(alias, path, type);
+                            result = PartialView("~/Views/Shared/DataGridView/Edit.cshtml", fileInfo);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                Guid sessionId = new Guid();
+                TempData["fsTreeId"] = String.Format("_{0}_", Guid.NewGuid().ToString("N"));
+                TempData["alias"] = alias;
+                TempData["html"] = FileTree.RenderDirectoryTree(sessionId, alias, null);
+                result = View("Index");
+            }
+            return result;
+*/
         }
     }
 }
