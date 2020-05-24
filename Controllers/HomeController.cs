@@ -7,9 +7,11 @@ namespace DocsRd.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public Object Index()
         {
-            return View();
+            // Заход при отладке. Метод GET. Параметров нет.
+            Guid sessionId = new Guid("12345678-1234-1234-1234-123456789012");
+            return View(sessionId);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
