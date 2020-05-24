@@ -79,7 +79,7 @@
 
     function q() {
         $('#_layout_content').html('');
-        let jqXHR = $.post('/home/rd', 'sessionId=' + Nskd.Server.SessionId);
+        let jqXHR = $.post('/rd/index', 'sessionId=' + Nskd.Server.SessionId);
         jqXHR.done(function (data) {
             //alert('done');
             //alert(data);
