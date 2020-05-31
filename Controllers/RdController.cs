@@ -84,7 +84,7 @@ namespace DocsRd.Controllers
         }
         public Object Test(String cmd, String alias, String path, String type)
         {
-            Object result = $"DocsRd.Controllers.RdController.Test('{cmd}', '{alias}', '{path}', '{type}')<br />";
+            Object result = $"DocsRd.Controllers.RdController.Test('{cmd}', '{alias}', '{Utility.UnEscape(path)}', '{type}')<br />";
             return result;
         }
     }

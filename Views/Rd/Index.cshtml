@@ -8,7 +8,7 @@
         overflow: auto;
     }
 
-    #docsrd_views_home_rd .file_system {
+    #docsrd_views_home_rd .file_tree {
         border-left: 1px solid black;
         border-top: 1px solid black;
         border-right: 1px solid black;
@@ -52,7 +52,7 @@
     <div class="filter">
         <p>Фильтр</p>
     </div>
-    <div class="file_system">
+    <div class="file_tree">
         <partial name="~/Views/Rd/FileSys.cshtml" />
     </div>
     <div class="cmd">
@@ -60,31 +60,36 @@
     </div>
     <div class="inf">
         <div class="path"></div>
-        <div class="inf"></div>
+        <div class="pars"></div>
     </div>
 </div>
 
 <script type="text/javascript">
     var DocsRdViewsHomeRd = (function () {
+        let mainDiv = $('#docsrd_views_home_rd');
+        let filterDiv = mainDiv.find('div.filter');
+        let fileTreeDiv = mainDiv.find('div.file_tree');
+        let cmdDiv = mainDiv.find('div.cmd');
+        let infDiv = mainDiv.find('div.inf');
         return {
             // функция со специальным именем (alias + 'FsClick') для вызова из FsTree
             // type - Имя узла на котором был клик или 'dir' или 'file'
             fileSystemRowClick: function (path, type) {
-                $('#p_rd_inf_inf').empty();
-                $('#p_rd_inf_path').text(path);
+                infDiv.find('div.path').text(path);
+                infDiv.find('div.pars').empty();
                 let data = 'cmd=GetFsInfo' +
                     '&alias=' + 'docs_rd' +
                     '&path=' + escape(path).replace(/\+/g, '%2B') +
                     '&type=' + type;
                 $.post('/rd/test', data, function (data) {
                     alert(data);
-                    $('#p_rd_inf_inf').html(data);
+                    infDiv.find('div.pars').html(data);
                 });
             },
             cmdOpen: function () {
                 alert('DocsRdViewsHomeRd.cmdOpen()');
 
-                var path = $('#p_rd_inf_path').text();
+                var path = infDiv.find('div.path').text();
                 alert(path); return;
                 if (path) {
                     //FsTree.downloadFile(path);
