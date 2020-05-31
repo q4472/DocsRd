@@ -72,12 +72,12 @@
             fileSystemRowClick: function (path, type) {
                 $('#p_rd_inf_inf').empty();
                 $('#p_rd_inf_path').text(path);
-                var data = 'cmd=GetFsInfo' +
-                    '&alias=' + 'TempData["alias"]' +
+                let data = 'cmd=GetFsInfo' +
+                    '&alias=' + 'docs_rd' +
                     '&path=' + escape(path).replace(/\+/g, '%2B') +
                     '&type=' + type;
-                alert(data); return;
-                $.post('/Docs/Rd', data, function (data) {
+                $.post('/rd/test', data, function (data) {
+                    alert(data);
                     $('#p_rd_inf_inf').html(data);
                 });
             },

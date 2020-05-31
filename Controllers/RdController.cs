@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using DocsRd.Models;
+using Nskd;
+using System.Text;
 
 namespace DocsRd.Controllers
 {
@@ -58,7 +60,7 @@ namespace DocsRd.Controllers
         {
             Object result = $"DocsRd.Controllers.RdController.GetDirInf('{cmd}', '{alias}', '{path}')<br />";
             String html;
-            path = System.Web.HttpUtility.UrlDecode(path);
+            path = Utility.UnEscape(path);
             switch (cmd)
             {
                 case "GetFileInfo":
@@ -78,6 +80,11 @@ namespace DocsRd.Controllers
                 default:
                     break;
             }
+            return result;
+        }
+        public Object Test(String cmd, String alias, String path, String type)
+        {
+            Object result = $"DocsRd.Controllers.RdController.Test('{cmd}', '{alias}', '{path}', '{type}')<br />";
             return result;
         }
     }
