@@ -12,13 +12,13 @@
     }
 
     .IsMiddleFsNode {
-        background-image: url(/Views/Shared/Imgs/i.gif);
+        background-image: url(/imgs/i.gif);
         background-position: top left;
         background-repeat: repeat-y;
     }
 
     .FsNodeIsLast {
-        background-image: url(/Views/Shared/Imgs/i_half.gif);
+        background-image: url(/imgs/i_half.gif);
         background-repeat: no-repeat;
     }
 
@@ -31,17 +31,17 @@
     }
 
     .FsNodeExpandIsOpen .FsNodeExpand {
-        background-image: url(/Views/Shared/Imgs/expand_minus.gif);
+        background-image: url(/imgs/expand_minus.gif);
         cursor: pointer;
     }
 
     .FsNodeExpandIsClosed .FsNodeExpand {
-        background-image: url(/Views/Shared/Imgs/expand_plus.gif);
+        background-image: url(/imgs/expand_plus.gif);
         cursor: pointer;
     }
 
     .FsNodeExpandIsLeaf .FsNodeExpand {
-        background-image: url(/Views/Shared/Imgs/expand_leaf.gif);
+        background-image: url(/imgs/expand_leaf.gif);
         cursor: auto;
     }
 
@@ -85,10 +85,10 @@
 <script type="text/javascript">
     var FsTree = (function () {
         function openDir(path, targetNode) {
-            var alias = 'TempData["alias"]';
+            var alias = '@TempData["alias"]';
             var path = escape(path).replace(/\+/g, '%2B');
             var data = 'cmd=GetDirectoryInfo&alias=' + alias + '&path=' + path;
-            $.post('/Fs', data, function (data) {
+            $.post('/rd/fs', data, function (data) {
                 n = $.parseHTML(data);
                 $(targetNode).find('.FsNodeContainer').replaceWith($(n).find('.FsNodeContainer')[0]);
             });
@@ -127,7 +127,7 @@
                     var node = clickedElem.parentNode;
                     var name = $(node).attr("data-node-name");
                     var path = $(node).attr("data-path");
-                    FsClick(path, name);
+                    DocsRdViewsHomeRd.fileSystemRowClick(path, name);
                 }
             },
             downloadFile: function (path) {
@@ -140,7 +140,7 @@
                 iframe.appendTo(body);
                 iframe[0].onload = function () { body[0].removeChild(iframe[0]); iframe[0] = null; };
 
-                var form = $('<form method="post" action="/Fs" target="' + guid + '" enctype="multipart/form-data" style="display: none;" onsubmit="return false;"></form>');
+                var form = $('<form method="post" action="/rd/fs" target="' + guid + '" enctype="multipart/form-data" style="display: none;" onsubmit="return false;"></form>');
                 form.appendTo(body);
                 form.append('<input type="hidden" name="cmd" value="DownloadFile" />');
                 form.append('<input type="hidden" name="alias" value="' + alias + '" />');

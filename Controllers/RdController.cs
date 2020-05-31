@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using DocsRd.Models;
 
 namespace DocsRd.Controllers
 {
@@ -12,9 +13,8 @@ namespace DocsRd.Controllers
             {
                 Guid.TryParse(Request.Form["sessionId"], out Guid sessionId);
                 String alias = "docs_rd";
-                TempData["fsTreeId"] = String.Format("_{0}_", Guid.NewGuid().ToString("N"));
                 TempData["alias"] = alias;
-                TempData["html"] = "FileTree.RenderDirectoryTree(sessionId, alias, null)";
+                TempData["html"] = FileTree.RenderDirectoryTree(sessionId, alias, null);
                 result = PartialView(sessionId);
             }
             catch (Exception e) { result += e.ToString(); }
@@ -47,13 +47,38 @@ namespace DocsRd.Controllers
             else
             {
                 Guid sessionId = new Guid();
-                TempData["fsTreeId"] = String.Format("_{0}_", Guid.NewGuid().ToString("N"));
                 TempData["alias"] = alias;
                 TempData["html"] = FileTree.RenderDirectoryTree(sessionId, alias, null);
                 result = View("Index");
             }
             return result;
 */
+        }
+        public Object Fs(String cmd, String alias, String path)
+        {
+            Object result = $"DocsRd.Controllers.RdController.GetDirInf('{cmd}', '{alias}', '{path}')<br />";
+            String html;
+            path = System.Web.HttpUtility.UrlDecode(path);
+            switch (cmd)
+            {
+                case "GetFileInfo":
+                    html = "GetFileInfo: '" + path + "'";
+                    //html = FileTree.GetFileInfo(alias, path);
+                    result = html;
+                    break;
+                case "GetDirectoryInfo":
+                    Guid sessionId = new Guid();
+                    html = FileTree.RenderDirectoryTree(sessionId, alias, path);
+                    result = html;
+                    break;
+                case "DownloadFile":
+                    FileData fd = FileData.GetFile(alias, path);
+                    result = File(fd.Contents, fd.ContentType, fd.Name);
+                    break;
+                default:
+                    break;
+            }
+            return result;
         }
     }
 }

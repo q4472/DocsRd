@@ -1,4 +1,4 @@
-﻿using FarmSib.Base.Data;
+﻿using DocsRd.Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Net;
 using System.Text;
 using System.Web;
 
-namespace FarmSib.Base.Models
+namespace DocsRd.Models
 {
     public class FileData
     {
@@ -22,7 +22,7 @@ namespace FarmSib.Base.Models
             Guid sessionId = new Guid();
             FileData fd = new FileData();
             fd.FullName = path;
-            fd.Contents = HomeData.Fs.GetFileContents(sessionId, alias, path);
+            fd.Contents = null; // HomeData.Fs.GetFileContents(sessionId, alias, path);
             fd.ContentType = "text/plain";
             String[] parts = path.Split('.');
             String ext = parts[parts.Length - 1].ToLower();
@@ -211,11 +211,15 @@ namespace FarmSib.Base.Models
         }
         public static String RenderDirectoryTree(Guid sessionId, String alias, String path)
         {
-            String html;
-            DataSet ds = HomeData.Fs.GetDirectoryInfo(sessionId, alias, path);
-            FileTree fileTree = new FileTree();
-            fileTree.LoadDirInfo(ds);
-            html = fileTree.ToHtml();
+            String html = "DocsRd.Models.FileTree.RenderDirectoryTree()<br />";
+            try
+            {
+                DataSet ds = Fs.GetDirectoryInfo(sessionId, alias, path);
+                FileTree fileTree = new FileTree();
+                fileTree.LoadDirInfo(ds);
+                html = fileTree.ToHtml();
+            }
+            catch (Exception e) { html += e.ToString(); }
             return html;
         }
 

@@ -4,4 +4,46 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\imgs\closed.gif" />
+    <Content Remove="wwwroot\imgs\document.gif" />
+    <Content Remove="wwwroot\imgs\expand_leaf.gif" />
+    <Content Remove="wwwroot\imgs\expand_loading.gif" />
+    <Content Remove="wwwroot\imgs\expand_minus.gif" />
+    <Content Remove="wwwroot\imgs\expand_plus.gif" />
+    <Content Remove="wwwroot\imgs\i.gif" />
+    <Content Remove="wwwroot\imgs\img.zip" />
+    <Content Remove="wwwroot\imgs\insect.gif" />
+    <Content Remove="wwwroot\imgs\i_bhalf.gif" />
+    <Content Remove="wwwroot\imgs\i_half.gif" />
+    <Content Remove="wwwroot\imgs\l.gif" />
+    <Content Remove="wwwroot\imgs\leaf.gif" />
+    <Content Remove="wwwroot\imgs\line_t.gif" />
+    <Content Remove="wwwroot\imgs\minus.gif" />
+    <Content Remove="wwwroot\imgs\open.gif" />
+    <Content Remove="wwwroot\imgs\plus.gif" />
+    <Content Remove="wwwroot\imgs\t.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\imgs\closed.gif" />
+    <None Include="wwwroot\imgs\document.gif" />
+    <None Include="wwwroot\imgs\expand_leaf.gif" />
+    <None Include="wwwroot\imgs\expand_loading.gif" />
+    <None Include="wwwroot\imgs\expand_minus.gif" />
+    <None Include="wwwroot\imgs\expand_plus.gif" />
+    <None Include="wwwroot\imgs\i.gif" />
+    <None Include="wwwroot\imgs\img.zip" />
+    <None Include="wwwroot\imgs\insect.gif" />
+    <None Include="wwwroot\imgs\i_bhalf.gif" />
+    <None Include="wwwroot\imgs\i_half.gif" />
+    <None Include="wwwroot\imgs\l.gif" />
+    <None Include="wwwroot\imgs\leaf.gif" />
+    <None Include="wwwroot\imgs\line_t.gif" />
+    <None Include="wwwroot\imgs\minus.gif" />
+    <None Include="wwwroot\imgs\open.gif" />
+    <None Include="wwwroot\imgs\plus.gif" />
+    <None Include="wwwroot\imgs\t.gif" />
+  </ItemGroup>
+
 </Project>

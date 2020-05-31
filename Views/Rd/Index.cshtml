@@ -56,7 +56,7 @@
         <partial name="~/Views/Rd/FileSys.cshtml" />
     </div>
     <div class="cmd">
-        <input type="button" value="Открыть" onclick="docs_rdCmdOpen();" />
+        <input type="button" value="Открыть" onclick="DocsRdViewsHomeRd.cmdOpen();" />
     </div>
     <div class="inf">
         <div class="path"></div>
@@ -69,26 +69,27 @@
         return {
             // функция со специальным именем (alias + 'FsClick') для вызова из FsTree
             // type - Имя узла на котором был клик или 'dir' или 'file'
-            fileSystemRowClick: function (path, type) { alert('DocsRdViewsHomeRd.fileSystemRowClick()'); },
-            /*
+            fileSystemRowClick: function (path, type) {
                 $('#p_rd_inf_inf').empty();
                 $('#p_rd_inf_path').text(path);
                 var data = 'cmd=GetFsInfo' +
                     '&alias=' + 'TempData["alias"]' +
                     '&path=' + escape(path).replace(/\+/g, '%2B') +
                     '&type=' + type;
-                //alert(data);
+                alert(data); return;
                 $.post('/Docs/Rd', data, function (data) {
                     $('#p_rd_inf_inf').html(data);
                 });
-             */
-            cmdOpen: function () { alert('DocsRdViewsHomeRd.cmdOpen()'); }
-            /*
+            },
+            cmdOpen: function () {
+                alert('DocsRdViewsHomeRd.cmdOpen()');
+
                 var path = $('#p_rd_inf_path').text();
+                alert(path); return;
                 if (path) {
-                    TempData["fsTreeId"]FsTree.downloadFile(path);
+                    //FsTree.downloadFile(path);
                 }
-            */
+            }
         };
     })();
 </script>
