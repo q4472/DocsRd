@@ -22,9 +22,9 @@ namespace DocsRd.Controllers
         }
         public Object Fs(String cmd, String path)
         {
+            path = Utility.UnEscape(path);
             Object result = $"DocsRd.Controllers.RdController.GetDirInf('{cmd}', '{path}')<br />";
             String html;
-            path = Utility.UnEscape(path);
             switch (cmd)
             {
                 case "GetFileInfo":
@@ -51,6 +51,7 @@ namespace DocsRd.Controllers
             path = Utility.UnEscape(path);
             Object result = $"DocsRd.Controllers.RdController.Test('{cmd}', '{path}', '{type}')<br />";
             // type или "dir" или "file"
+            RdModel.GetFsInfo(path, type);
             //DataGridView fileInfo = RdModel.GetFsInfo(path, type);
             //result = PartialView("~/Views/Shared/DataGridView/Edit.cshtml", fileInfo);
             return result;
