@@ -85,9 +85,8 @@
 <script type="text/javascript">
     var FsTree = (function () {
         function openDir(path, targetNode) {
-            var alias = '@TempData["alias"]';
             var path = escape(path).replace(/\+/g, '%2B');
-            var data = 'cmd=GetDirectoryInfo&alias=' + alias + '&path=' + path;
+            var data = 'cmd=GetDirectoryInfo&path=' + path;
             $.post('/rd/fs', data, function (data) {
                 n = $.parseHTML(data);
                 $(targetNode).find('.FsNodeContainer').replaceWith($(n).find('.FsNodeContainer')[0]);
@@ -133,7 +132,6 @@
             downloadFile: function (path) {
                 var body = $(document.body);
                 var guid = Nskd.Js.guid();
-                var alias = 'TempData["alias"]';
                 var path = escape(path).replace(/\+/g, '%2B');
 
                 var iframe = $('<iframe name="' + guid + '" style="display: none;" />');
@@ -143,7 +141,6 @@
                 var form = $('<form method="post" action="/rd/fs" target="' + guid + '" enctype="multipart/form-data" style="display: none;" onsubmit="return false;"></form>');
                 form.appendTo(body);
                 form.append('<input type="hidden" name="cmd" value="DownloadFile" />');
-                form.append('<input type="hidden" name="alias" value="' + alias + '" />');
                 form.append('<input type="hidden" name="path" value="' + path + '" />');
 
                 form[0].submit();

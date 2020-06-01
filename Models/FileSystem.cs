@@ -17,12 +17,12 @@ namespace DocsRd.Models
         public String FullName { get; set; }
         public String ContentType { get; set; }
         public Byte[] Contents { get; set; }
-        public static FileData GetFile(String alias, String path)
+        public static FileData GetFile(String path)
         {
             Guid sessionId = new Guid();
             FileData fd = new FileData();
             fd.FullName = path;
-            fd.Contents = null; // HomeData.Fs.GetFileContents(sessionId, alias, path);
+            fd.Contents = null; // HomeData.Fs.GetFileContents(sessionId, path);
             fd.ContentType = "text/plain";
             String[] parts = path.Split('.');
             String ext = parts[parts.Length - 1].ToLower();
@@ -209,12 +209,12 @@ namespace DocsRd.Models
             else html = RenderFileTreeNode(rootNode, true, true);
             return html;
         }
-        public static String RenderDirectoryTree(Guid sessionId, String alias, String path)
+        public static String RenderDirectoryTree(Guid sessionId, String path)
         {
             String html = "DocsRd.Models.FileTree.RenderDirectoryTree()<br />";
             try
             {
-                DataSet ds = Fs.GetDirectoryInfo(sessionId, alias, path);
+                DataSet ds = Fs.GetDirectoryInfo(sessionId, path);
                 FileTree fileTree = new FileTree();
                 fileTree.LoadDirInfo(ds);
                 html = fileTree.ToHtml();

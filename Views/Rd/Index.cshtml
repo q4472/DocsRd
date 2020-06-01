@@ -72,16 +72,15 @@
         let cmdDiv = mainDiv.find('div.cmd');
         let infDiv = mainDiv.find('div.inf');
         return {
-            // функция со специальным именем (alias + 'FsClick') для вызова из FsTree
+            // вызов из FsTree
             // type - Имя узла на котором был клик или 'dir' или 'file'
             fileSystemRowClick: function (path, type) {
                 infDiv.find('div.path').text(path);
                 infDiv.find('div.pars').empty();
                 let data = 'cmd=GetFsInfo' +
-                    '&alias=' + 'docs_rd' +
                     '&path=' + escape(path).replace(/\+/g, '%2B') +
                     '&type=' + type;
-                $.post('/rd/test', data, function (data) {
+                $.post('/rd/getfsinfo', data, function (data) {
                     alert(data);
                     infDiv.find('div.pars').html(data);
                 });
@@ -89,7 +88,7 @@
             cmdOpen: function () {
                 alert('DocsRdViewsHomeRd.cmdOpen()');
 
-                var path = infDiv.find('div.path').text();
+                let path = infDiv.find('div.path').text();
                 alert(path); return;
                 if (path) {
                     //FsTree.downloadFile(path);

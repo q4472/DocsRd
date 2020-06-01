@@ -14,67 +14,31 @@ namespace DocsRd.Controllers
             try
             {
                 Guid.TryParse(Request.Form["sessionId"], out Guid sessionId);
-                String alias = "docs_rd";
-                TempData["alias"] = alias;
-                TempData["html"] = FileTree.RenderDirectoryTree(sessionId, alias, null);
+                TempData["html"] = FileTree.RenderDirectoryTree(sessionId, null);
                 result = PartialView(sessionId);
             }
             catch (Exception e) { result += e.ToString(); }
             return result;
-            /*
-            String alias = "docs_rd";
-            if (Request.Form.Count > 1) // session_id, cmd
-            {
-                Dictionary<String, String> pars = new Dictionary<String, String>(Request.Form.Count);
-                for (int i = 0; i < Request.Form.Count; i++)
-                {
-                    pars.Add(Request.Form.Keys[i], Request.Form.GetValues(i)[0]);
-                }
-                String cmd = pars["cmd"];
-                if (!String.IsNullOrWhiteSpace(cmd))
-                {
-                    switch (cmd)
-                    {
-                        case "GetFsInfo":
-                            String path = Utility.UnEscape(pars["path"]);
-                            String type = pars["type"]; // или "dir" или "file"
-                            DataGridView fileInfo = RdModel.GetFsInfo(alias, path, type);
-                            result = PartialView("~/Views/Shared/DataGridView/Edit.cshtml", fileInfo);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-            else
-            {
-                Guid sessionId = new Guid();
-                TempData["alias"] = alias;
-                TempData["html"] = FileTree.RenderDirectoryTree(sessionId, alias, null);
-                result = View("Index");
-            }
-            return result;
-*/
         }
-        public Object Fs(String cmd, String alias, String path)
+        public Object Fs(String cmd, String path)
         {
-            Object result = $"DocsRd.Controllers.RdController.GetDirInf('{cmd}', '{alias}', '{path}')<br />";
+            Object result = $"DocsRd.Controllers.RdController.GetDirInf('{cmd}', '{path}')<br />";
             String html;
             path = Utility.UnEscape(path);
             switch (cmd)
             {
                 case "GetFileInfo":
                     html = "GetFileInfo: '" + path + "'";
-                    //html = FileTree.GetFileInfo(alias, path);
+                    //html = FileTree.GetFileInfo(path);
                     result = html;
                     break;
                 case "GetDirectoryInfo":
                     Guid sessionId = new Guid();
-                    html = FileTree.RenderDirectoryTree(sessionId, alias, path);
+                    html = FileTree.RenderDirectoryTree(sessionId, path);
                     result = html;
                     break;
                 case "DownloadFile":
-                    FileData fd = FileData.GetFile(alias, path);
+                    FileData fd = FileData.GetFile(path);
                     result = File(fd.Contents, fd.ContentType, fd.Name);
                     break;
                 default:
@@ -82,9 +46,13 @@ namespace DocsRd.Controllers
             }
             return result;
         }
-        public Object Test(String cmd, String alias, String path, String type)
+        public Object GetFsInfo(String cmd, String path, String type)
         {
-            Object result = $"DocsRd.Controllers.RdController.Test('{cmd}', '{alias}', '{Utility.UnEscape(path)}', '{type}')<br />";
+            path = Utility.UnEscape(path);
+            Object result = $"DocsRd.Controllers.RdController.Test('{cmd}', '{path}', '{type}')<br />";
+            // type или "dir" или "file"
+            //DataGridView fileInfo = RdModel.GetFsInfo(path, type);
+            //result = PartialView("~/Views/Shared/DataGridView/Edit.cshtml", fileInfo);
             return result;
         }
     }

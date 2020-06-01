@@ -8,28 +8,28 @@ namespace DocsRd.Data
     {
         private static String dataServicesHost = "127.0.0.1"; // localhost
 
-        public static DataSet GetDirectoryInfo(Guid sessionId, String alias, String path)
+        public static DataSet GetDirectoryInfo(Guid sessionId, String path)
         {
             DataSet ds = null;
             RequestPackage rqp = new RequestPackage();
             rqp.SessionId = sessionId;
             rqp.Command = "GetDirectoryInfo";
             rqp.Parameters = new RequestParameter[] {
-                    new RequestParameter("alias", alias),
+                    new RequestParameter("alias", "docs_rd"),
                     new RequestParameter("path", path)
                 };
             ResponsePackage rsp = ExecuteInFs(rqp);
             ds = rsp.Data;
             return ds;
         }
-        public static Byte[] GetFileContents(Guid sessionId, String alias = null, String path = null)
+        public static Byte[] GetFileContents(Guid sessionId, String path = null)
         {
             Byte[] contents = null;
             RequestPackage rqp = new RequestPackage();
             rqp.SessionId = sessionId;
             rqp.Command = "GetFileContents";
             rqp.Parameters = new RequestParameter[2];
-            rqp.Parameters[0] = new RequestParameter("alias", alias);
+            rqp.Parameters[0] = new RequestParameter("alias", "docs_rd");
             rqp.Parameters[1] = new RequestParameter("path", path);
             ResponsePackage rsp = ExecuteInFs(rqp);
             if (rsp.Data != null)
@@ -54,17 +54,6 @@ namespace DocsRd.Data
                 }
             }
             return contents;
-        }
-        public static void AddDirectory(Guid sessionId, String alias, String path)
-        {
-            RequestPackage rqp = new RequestPackage();
-            rqp.SessionId = sessionId;
-            rqp.Command = "AddDirectory";
-            rqp.Parameters = new RequestParameter[] {
-                    new RequestParameter { Name = "alias", Value = alias },
-                    new RequestParameter { Name = "path", Value = path }
-                };
-            ResponsePackage rsp = ExecuteInFs(rqp);
         }
         public static ResponsePackage ExecuteInFs(RequestPackage rqp)
         {
