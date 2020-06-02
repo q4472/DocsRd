@@ -78,12 +78,13 @@
                 infDiv.find('div.path').text(path);
                 infDiv.find('div.pars').empty();
                 let data = 'cmd=GetFsInfo' +
-                    '&path=' + escape(path).replace(/\+/g, '%2B') +
-                    '&type=' + type;
-                $.post('/rd/getfsinfo', data, function (data) {
-                    alert(data);
-                    infDiv.find('div.pars').html(data);
-                });
+                    '&path=' + escape(path).replace(/\+/g, '%2B');
+                if (type == 'file') {
+                    $.post('/rd/getfsinfo', data, function (data) {
+                        //alert(data);
+                        infDiv.find('div.pars').html(data);
+                    });
+                }
             },
             cmdOpen: function () {
                 alert('DocsRdViewsHomeRd.cmdOpen()');

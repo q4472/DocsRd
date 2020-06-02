@@ -84,9 +84,8 @@ namespace DocsRd.Data
             }
             return r;
         }
-        public static DataTable GetFsInfoCommon(String fileId, String link, String type = null)
+        public static DataTable GetFsInfoCommon(String fileId)
         {
-            // type ???
             RequestPackage rqp = new RequestPackage();
             rqp.Command = "[dbo].[рег_уд__файлы__get]";
             rqp.Parameters = new RequestParameter[] {

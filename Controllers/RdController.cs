@@ -2,7 +2,6 @@
 using System;
 using DocsRd.Models;
 using Nskd;
-using System.Text;
 
 namespace DocsRd.Controllers
 {
@@ -46,14 +45,12 @@ namespace DocsRd.Controllers
             }
             return result;
         }
-        public Object GetFsInfo(String cmd, String path, String type)
+        public Object GetFsInfo(String cmd, String path)
         {
             path = Utility.UnEscape(path);
-            Object result = $"DocsRd.Controllers.RdController.Test('{cmd}', '{path}', '{type}')<br />";
-            // type или "dir" или "file"
-            RdModel.GetFsInfo(path, type);
-            //DataGridView fileInfo = RdModel.GetFsInfo(path, type);
-            //result = PartialView("~/Views/Shared/DataGridView/Edit.cshtml", fileInfo);
+            Object result = $"DocsRd.Controllers.RdController.Test('{cmd}', '{path}')<br />";
+            var dt = RdModel.GetFsInfo(path);
+            result = PartialView("~/Views/Rd/Inf.cshtml", dt);
             return result;
         }
     }
