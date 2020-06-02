@@ -2,6 +2,7 @@
 using System;
 using DocsRd.Models;
 using Nskd;
+using System.Collections;
 
 namespace DocsRd.Controllers
 {
@@ -48,9 +49,22 @@ namespace DocsRd.Controllers
         public Object GetFsInfo(String cmd, String path)
         {
             path = Utility.UnEscape(path);
-            Object result = $"DocsRd.Controllers.RdController.Test('{cmd}', '{path}')<br />";
+            Object result = $"DocsRd.Controllers.RdController.GetFsInfo('{cmd}', '{path}')<br />";
             var dt = RdModel.GetFsInfo(path);
             result = PartialView("~/Views/Rd/Inf.cshtml", dt);
+            return result;
+        }
+        public Object Test()
+        {
+            Object result = "DocsRd.Controllers.RdController.Test()<br />";
+            foreach (var key in Request.Form.Keys)
+            {
+                Hashtable ht = Nskd.JsonV3.Parse(key) as Hashtable;
+                if(ht != null)
+                {
+                    result += ht.Count.ToString();
+                }
+            }
             return result;
         }
     }

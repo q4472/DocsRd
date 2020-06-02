@@ -42,30 +42,62 @@
         }
 </style>
 <div id="views_rd_inf">
+    <input type="button" value="Сохранить" disabled /><br />
     <table>
         <tr class="hidden">
             <td>id</td>
-            <td>@id</td>
+            <td><input type="text" name="id" value="@id" /></td>
         </tr>
         <tr class="edit">
             <td class="header">Номер</td>
-            <td class="data"><input type="text" value="@номер_документа" /></td>
+            <td class="data"><input type="text" name="номер_документа" value="@номер_документа" /></td>
         </tr>
         <tr class="edit">
             <td class="header">Дата регистрации</td>
-            <td class="data"><input type="text" value="@дата_документа" /></td>
+            <td class="data"><input type="text" name="дата_документа" value="@дата_документа" /></td>
         </tr>
         <tr class="edit">
             <td class="header">Дата перерегистрации</td>
-            <td class="data"><input type="text" value="@дата_перерегистрации" /></td>
+            <td class="data"><input type="text" name="дата_перерегистрации" value="@дата_перерегистрации" /></td>
         </tr>
         <tr class="edit">
             <td class="header">Дата окончания</td>
-            <td class="data"><input type="text" value="@дата_окончания" /></td>
+            <td class="data"><input type="text" name="дата_окончания" value="@дата_окончания" /></td>
         </tr>
         <tr class="edit">
             <td class="header">Коментарий</td>
-            <td class="data"><input type="text" value="@коментарий" /></td>
+            <td class="data"><input type="text" name="коментарий" value="@коментарий" /></td>
         </tr>
     </table>
 </div>
+<script type="text/javascript">
+    var ViewsRdInf = (function () {
+        let mainDiv = $('div#views_rd_inf');
+        let saveButton = mainDiv.find('input[type="button"]');
+        saveButton.click(function () {
+            saveButton.prop('disabled', true);
+            let data = {
+                id: mainDiv.find('input[name="id"]').val(),
+                номер_документа: mainDiv.find('input[name="номер_документа"]').val(),
+                дата_документа: mainDiv.find('input[name="дата_документа"]').val(),
+                дата_перерегистрации: mainDiv.find('input[name="дата_перерегистрации"]').val(),
+                дата_окончания: mainDiv.find('input[name="дата_окончания"]').val(),
+                коментарий: mainDiv.find('input[name="коментарий"]').val()
+            };
+            data = Nskd.Json.toString(data);
+            alert(data);
+            $.post('/rd/test', data, function (data) {
+                alert(data);
+            });
+            //mainDiv.find('input[name="id"]').val();
+            mainDiv.find('input[name="номер_документа"]').val('');
+            mainDiv.find('input[name="дата_документа"]').val('');
+            mainDiv.find('input[name="дата_перерегистрации"]').val('');
+            mainDiv.find('input[name="дата_окончания"]').val('');
+            mainDiv.find('input[name="коментарий"]').val('');
+        });
+        mainDiv.find('input[type="text"]').change(function () {
+            saveButton.prop('disabled', false);
+        });
+    })();
+</script>
