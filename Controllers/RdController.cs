@@ -54,17 +54,16 @@ namespace DocsRd.Controllers
             result = PartialView("~/Views/Rd/Inf.cshtml", dt);
             return result;
         }
-        public Object Test()
+        public Object Test(String data)
         {
-            Object result = "DocsRd.Controllers.RdController.Test()<br />";
-            foreach (var key in Request.Form.Keys)
+            Object result = $"DocsRd.Controllers.RdController.Test('{data}')<br />";
+
+            Hashtable ht = Nskd.JsonV3.Parse(data) as Hashtable;
+            if (ht != null)
             {
-                Hashtable ht = Nskd.JsonV3.Parse(key) as Hashtable;
-                if(ht != null)
-                {
-                    result += ht.Count.ToString();
-                }
+                result += ht.Count.ToString();
             }
+
             return result;
         }
     }

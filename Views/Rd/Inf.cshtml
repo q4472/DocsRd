@@ -40,6 +40,10 @@
         #views_rd_inf .edit .data input {
             width: 200px;
         }
+
+            #views_rd_inf .edit .data input.err {
+                background-color: #ffcccc;
+            }
 </style>
 <div id="views_rd_inf">
     <input type="button" value="Сохранить" disabled /><br />
@@ -54,15 +58,15 @@
         </tr>
         <tr class="edit">
             <td class="header">Дата регистрации</td>
-            <td class="data"><input type="text" name="дата_документа" value="@дата_документа" /></td>
+            <td class="data"><input type="date" name="дата_документа" value="@дата_документа" /></td>
         </tr>
         <tr class="edit">
             <td class="header">Дата перерегистрации</td>
-            <td class="data"><input type="text" name="дата_перерегистрации" value="@дата_перерегистрации" /></td>
+            <td class="data"><input type="date" name="дата_перерегистрации" value="@дата_перерегистрации" /></td>
         </tr>
         <tr class="edit">
             <td class="header">Дата окончания</td>
-            <td class="data"><input type="text" name="дата_окончания" value="@дата_окончания" /></td>
+            <td class="data"><input type="date" name="дата_окончания" value="@дата_окончания" /></td>
         </tr>
         <tr class="edit">
             <td class="header">Коментарий</td>
@@ -74,27 +78,51 @@
     var ViewsRdInf = (function () {
         let mainDiv = $('div#views_rd_inf');
         let saveButton = mainDiv.find('input[type="button"]');
+        let id = mainDiv.find('input[name="id"]');
+        let номер_документа = mainDiv.find('input[name="номер_документа"]');
+        let дата_документа = mainDiv.find('input[name="дата_документа"]');
+        let дата_перерегистрации = mainDiv.find('input[name="дата_перерегистрации"]');
+        let дата_окончания = mainDiv.find('input[name="дата_окончания"]');
+        let коментарий = mainDiv.find('input[name="коментарий"]');
+
+        mainDiv.find('input[type="date"]').keyup(function () {
+            let e = $(this);
+            let d = Nskd.parseDate(e.val());
+            if (d == null) e.addClass('err'); else e.removeClass('err');
+        });
+        mainDiv.find('input[type="date"]').focusout(function () {
+            let e = $(this);
+            let d = Nskd.parseDate(e.val());
+            if (d == null) e.addClass('err');
+            else {
+                e.removeClass('err');
+                let dd = d.getDate(); dd = (dd < 10) ? '0' + dd : '' + dd;
+                let MM = d.getMonth() + 1; MM = (MM < 10) ? '0' + MM : '' + MM;
+                let yyyy = d.getFullYear();
+                e.val(dd + '.' + MM + '.' + yyyy);
+            }
+        });
+
         saveButton.click(function () {
             saveButton.prop('disabled', true);
-            let data = {
-                id: mainDiv.find('input[name="id"]').val(),
-                номер_документа: mainDiv.find('input[name="номер_документа"]').val(),
-                дата_документа: mainDiv.find('input[name="дата_документа"]').val(),
-                дата_перерегистрации: mainDiv.find('input[name="дата_перерегистрации"]').val(),
-                дата_окончания: mainDiv.find('input[name="дата_окончания"]').val(),
-                коментарий: mainDiv.find('input[name="коментарий"]').val()
-            };
-            data = Nskd.Json.toString(data);
+            let data = {};
+            data.id = id.val();
+            data.номер_документа = номер_документа.val();
+            data.дата_документа = (дата_документа.hasClass('err')) ? '' : дата_документа.val();
+            data.дата_перерегистрации = (дата_перерегистрации.hasClass('err')) ? '' : дата_перерегистрации.val();
+            data.дата_окончания = (дата_окончания.hasClass('err')) ? '' : дата_окончания.val();
+            data.коментарий = коментарий.val();
+            data = 'data=' + Nskd.Json.toString(data);
             alert(data);
             $.post('/rd/test', data, function (data) {
                 alert(data);
             });
-            //mainDiv.find('input[name="id"]').val();
-            mainDiv.find('input[name="номер_документа"]').val('');
-            mainDiv.find('input[name="дата_документа"]').val('');
-            mainDiv.find('input[name="дата_перерегистрации"]').val('');
-            mainDiv.find('input[name="дата_окончания"]').val('');
-            mainDiv.find('input[name="коментарий"]').val('');
+            //id.val();
+            номер_документа.val('');
+            дата_документа.removeClass('err').val('');
+            дата_перерегистрации.removeClass('err').val('');
+            дата_окончания.removeClass('err').val('');
+            коментарий.val('');
         });
         mainDiv.find('input[type="text"]').change(function () {
             saveButton.prop('disabled', false);
