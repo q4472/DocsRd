@@ -62,7 +62,7 @@ namespace DocsRd.Data
         }
         public static DataSet Execute(RequestPackage rqp)
         {
-            ResponsePackage rsp = rqp.GetResponse("http://" + dataServicesHost + ":11002/");
+            ResponsePackage rsp = rqp.GetResponse("http://" + dataServicesHost + ":11012/");
             return rsp.Data;
         }
         public static DataTable GetFirstTable(DataSet ds)
@@ -86,12 +86,11 @@ namespace DocsRd.Data
         }
         public static DataTable GetFsInfoCommon(String fileId, String link, String type = null)
         {
+            // type ???
             RequestPackage rqp = new RequestPackage();
-            rqp.Command = "[dbo].[file_info_get]";
+            rqp.Command = "[dbo].[рег_уд__файлы__get]";
             rqp.Parameters = new RequestParameter[] {
-                new RequestParameter("file_id", fileId ),
-                new RequestParameter("link", link ),
-                new RequestParameter("type", type )
+                new RequestParameter("id", fileId )
             };
             DataTable dt = GetFirstTable(Execute(rqp));
             return dt;
