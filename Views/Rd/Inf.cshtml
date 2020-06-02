@@ -1,3 +1,71 @@
-﻿<div>
-    /Views/Rd/Inf.cshtml<br />
+﻿@using System.Data
+@model DataTable
+@{
+    String id = "";
+    String номер_документа = "";
+    String дата_документа = "";
+    String дата_перерегистрации = "";
+    String дата_окончания = "";
+    String коментарий = "";
+    if (Model.Rows.Count == 1)
+    {
+        id = (String)Model.Rows[0]["id"];
+        if (Model.Rows[0]["номер_документа"] != DBNull.Value)
+            номер_документа = (String)Model.Rows[0]["номер_документа"];
+        if (Model.Rows[0]["дата_документа"] != DBNull.Value)
+            дата_документа = ((DateTime)Model.Rows[0]["дата_документа"]).ToString("dd.MM.yyyy");
+        if (Model.Rows[0]["дата_перерегистрации"] != DBNull.Value)
+            дата_перерегистрации = ((DateTime)Model.Rows[0]["дата_перерегистрации"]).ToString("dd.MM.yyyy");
+        if (Model.Rows[0]["дата_окончания"] != DBNull.Value)
+            дата_окончания = ((DateTime)Model.Rows[0]["дата_окончания"]).ToString("dd.MM.yyyy");
+        if (Model.Rows[0]["коментарий"] != DBNull.Value)
+            коментарий = (String)Model.Rows[0]["коментарий"];
+    }
+}
+<style type="text/css">
+    #views_rd_inf .hidden {
+        display: none;
+    }
+
+    #views_rd_inf .edit .header {
+        padding: 4px;
+        text-align: right;
+    }
+
+    #views_rd_inf .edit .data {
+        border: 1px solid black;
+        padding: 2px;
+    }
+
+        #views_rd_inf .edit .data input {
+            width: 200px;
+        }
+</style>
+<div id="views_rd_inf">
+    <table>
+        <tr class="hidden">
+            <td>id</td>
+            <td>@id</td>
+        </tr>
+        <tr class="edit">
+            <td class="header">Номер</td>
+            <td class="data"><input type="text" value="@номер_документа" /></td>
+        </tr>
+        <tr class="edit">
+            <td class="header">Дата регистрации</td>
+            <td class="data"><input type="text" value="@дата_документа" /></td>
+        </tr>
+        <tr class="edit">
+            <td class="header">Дата перерегистрации</td>
+            <td class="data"><input type="text" value="@дата_перерегистрации" /></td>
+        </tr>
+        <tr class="edit">
+            <td class="header">Дата окончания</td>
+            <td class="data"><input type="text" value="@дата_окончания" /></td>
+        </tr>
+        <tr class="edit">
+            <td class="header">Коментарий</td>
+            <td class="data"><input type="text" value="@коментарий" /></td>
+        </tr>
+    </table>
 </div>
