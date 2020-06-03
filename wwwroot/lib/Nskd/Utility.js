@@ -270,18 +270,37 @@ Nskd.Utility.DataTable = (function () {
 
 //****************************************************
 Nskd.parseDate = function (s) {
-    var v = null;
+
+    //s = Nskd.Js.trim(s);
+    //if (!Nskd.Js.is(s, 'string') || s.length === 0) { return null; }
+
+    let v = null;
+
+    let date = new Date();
+    let yyyy = date.getFullYear();
+    let MM = date.getMonth() + 1;
+    let dd = date.getDate();
+    let cs;
+
     if (s) {
-        var cs = s.split('.');
+        cs = s.split('.');
         if (cs.length == 3) {
-            var dd = parseInt(cs[0], 10);
-            var MM = parseInt(cs[1], 10);
-            var yyyy = parseInt(cs[2], 10);
+            dd = parseInt(cs[0], 10);
+            MM = parseInt(cs[1], 10);
+            yyyy = parseInt(cs[2], 10);
             if (isFinite(dd) && isFinite(MM) && isFinite(yyyy)) {
-                if (yyyy < 100) yyyy += 2000;
-                if ((1970 < yyyy) && (yyyy < 2070)) {
-                    v = new Date(yyyy, MM - 1, dd);
-                }
+                if (yyyy < 50) yyyy += 2000; else if (yyyy < 100) yyyy += 1900;
+                v = new Date(yyyy, MM - 1, dd);
+            }
+        }
+        cs = s.split('-');
+        if (cs.length == 3) {
+            dd = parseInt(cs[2], 10);
+            MM = parseInt(cs[1], 10);
+            yyyy = parseInt(cs[0], 10);
+            if (isFinite(dd) && isFinite(MM) && isFinite(yyyy)) {
+                if (yyyy < 50) yyyy += 2000; else if (yyyy < 100) yyyy += 1900;
+                v = new Date(yyyy, MM - 1, dd);
             }
         }
     }

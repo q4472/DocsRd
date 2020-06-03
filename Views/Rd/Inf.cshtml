@@ -88,12 +88,12 @@
         mainDiv.find('input[type="date"]').keyup(function () {
             let e = $(this);
             let d = Nskd.parseDate(e.val());
-            if (d == null) e.addClass('err'); else e.removeClass('err');
+            if (e.val() != '' && d == null) e.addClass('err'); else e.removeClass('err');
         });
         mainDiv.find('input[type="date"]').focusout(function () {
             let e = $(this);
             let d = Nskd.parseDate(e.val());
-            if (d == null) e.addClass('err');
+            if (e.val() != '' && d == null) e.addClass('err');
             else {
                 e.removeClass('err');
                 let dd = d.getDate(); dd = (dd < 10) ? '0' + dd : '' + dd;
