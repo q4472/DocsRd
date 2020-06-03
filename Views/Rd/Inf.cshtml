@@ -44,6 +44,10 @@
             #views_rd_inf .edit .data input.err {
                 background-color: #ffcccc;
             }
+
+            #views_rd_inf .edit .data input.changed {
+                background-color: #ccffcc;
+            }
 </style>
 <div id="views_rd_inf">
     <input type="button" value="Сохранить" disabled /><br />
@@ -88,12 +92,21 @@
         mainDiv.find('input[type="date"]').keyup(function () {
             let e = $(this);
             let d = Nskd.parseDate(e.val());
-            if (e.val() != '' && d == null) e.addClass('err'); else e.removeClass('err');
+            if (e.val() != '' && d == null) {
+                e.removeClass('changed');
+                e.addClass('err');
+            }
+            else {
+                e.addClass('changed');
+                e.removeClass('err');
+            }
         });
         mainDiv.find('input[type="date"]').focusout(function () {
             let e = $(this);
             let d = Nskd.parseDate(e.val());
-            if (e.val() != '' && d == null) e.addClass('err');
+            if (e.val() != '' && d == null) {
+                e.addClass('err');
+            }
             else {
                 e.removeClass('err');
                 let dd = d.getDate(); dd = (dd < 10) ? '0' + dd : '' + dd;
@@ -102,30 +115,33 @@
                 e.val(dd + '.' + MM + '.' + yyyy);
             }
         });
+        mainDiv.find('input[type="text"], input[type="date"]').change(function () {
+            let e = $(this);
+            e.addClass('changed');
+            saveButton.prop('disabled', false);
+        });
 
         saveButton.click(function () {
             saveButton.prop('disabled', true);
-            let data = {};
-            data.id = id.val();
-            data.номер_документа = номер_документа.val();
-            data.дата_документа = (дата_документа.hasClass('err')) ? '' : дата_документа.val();
-            data.дата_перерегистрации = (дата_перерегистрации.hasClass('err')) ? '' : дата_перерегистрации.val();
-            data.дата_окончания = (дата_окончания.hasClass('err')) ? '' : дата_окончания.val();
-            data.коментарий = коментарий.val();
+            let data = {
+                id: id.val(),
+                ссылка: $('div#views_home_rd_index > div.inf > div.path').text(),
+                номер_документа: номер_документа.val(),
+                дата_документа: (дата_документа.hasClass('err')) ? '' : дата_документа.val(),
+                дата_перерегистрации: (дата_перерегистрации.hasClass('err')) ? '' : дата_перерегистрации.val(),
+                дата_окончания: (дата_окончания.hasClass('err')) ? '' : дата_окончания.val(),
+                коментарий: коментарий.val()
+            };
             data = 'data=' + Nskd.Json.toString(data);
-            alert(data);
-            $.post('/rd/test', data, function (data) {
+            //alert(data);
+            $.post('/rd/set', data, function (data) {
                 alert(data);
             });
-            //id.val();
-            номер_документа.val('');
-            дата_документа.removeClass('err').val('');
-            дата_перерегистрации.removeClass('err').val('');
-            дата_окончания.removeClass('err').val('');
-            коментарий.val('');
-        });
-        mainDiv.find('input[type="text"]').change(function () {
-            saveButton.prop('disabled', false);
+            номер_документа.removeClass('changed').val('');
+            дата_документа.removeClass('changed').removeClass('err').val('');
+            дата_перерегистрации.removeClass('changed').removeClass('err').val('');
+            дата_окончания.removeClass('changed').removeClass('err').val('');
+            коментарий.removeClass('changed').val('');
         });
     })();
 </script>

@@ -49,14 +49,14 @@ namespace DocsRd.Controllers
         public Object GetFsInfo(String cmd, String path)
         {
             path = Utility.UnEscape(path);
-            Object result = $"DocsRd.Controllers.RdController.GetFsInfo('{cmd}', '{path}')<br />";
+            Object result = $"Controllers.RdController.GetFsInfo('{cmd}', '{path}')<br />";
             var dt = RdModel.GetFsInfo(path);
             result = PartialView("~/Views/Rd/Inf.cshtml", dt);
             return result;
         }
-        public Object Test(String data)
+        public Object Set(String data)
         {
-            Object result = $"DocsRd.Controllers.RdController.Test('{data}')<br />";
+            Object result = $"Controllers.RdController.Test('{data}')<br />";
 
             Hashtable ht = Nskd.JsonV3.Parse(data) as Hashtable;
             if (ht != null)

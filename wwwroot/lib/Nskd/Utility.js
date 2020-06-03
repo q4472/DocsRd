@@ -24,7 +24,8 @@ Nskd.Utility.DataTable = (function () {
                 var dataType = cols[ci].dataType;
                 var value = rows[rowIndex][ci];
                 if (dataType && (typeof value != 'undefined')) {
-                    cell = { 'dataTable': table,
+                    cell = {
+                        'dataTable': table,
                         'rowIndex': rowIndex,
                         'columnIndex': ci,
                         'dataType': dataType,
@@ -271,8 +272,8 @@ Nskd.Utility.DataTable = (function () {
 //****************************************************
 Nskd.parseDate = function (s) {
 
-    //s = Nskd.Js.trim(s);
-    //if (!Nskd.Js.is(s, 'string') || s.length === 0) { return null; }
+    s = Nskd.Js.trim(s);
+    if (!Nskd.Js.is(s, 'string') || s.length === 0) { return null; }
 
     let v = null;
 
@@ -280,19 +281,17 @@ Nskd.parseDate = function (s) {
     let yyyy = date.getFullYear();
     let MM = date.getMonth() + 1;
     let dd = date.getDate();
-    let cs;
 
-    if (s) {
-        cs = s.split('.');
-        if (cs.length == 3) {
-            dd = parseInt(cs[0], 10);
-            MM = parseInt(cs[1], 10);
-            yyyy = parseInt(cs[2], 10);
-            if (isFinite(dd) && isFinite(MM) && isFinite(yyyy)) {
-                if (yyyy < 50) yyyy += 2000; else if (yyyy < 100) yyyy += 1900;
-                v = new Date(yyyy, MM - 1, dd);
-            }
+    let cs = s.split('.');
+    if (cs.length == 3) {
+        dd = parseInt(cs[0], 10);
+        MM = parseInt(cs[1], 10);
+        yyyy = parseInt(cs[2], 10);
+        if (isFinite(dd) && isFinite(MM) && isFinite(yyyy)) {
+            if (yyyy < 50) yyyy += 2000; else if (yyyy < 100) yyyy += 1900;
+            v = new Date(yyyy, MM - 1, dd);
         }
+    } else {
         cs = s.split('-');
         if (cs.length == 3) {
             dd = parseInt(cs[2], 10);
@@ -330,14 +329,14 @@ function createOrGetElement(el, ns, attr, st) {
     return res;
     function is(o, t) {
         return ((t == 'undefined') && (o === undefined))
-                || ((t == 'null') && (o === null))
-                || ((t == 'boolean') && ((typeof o == 'boolean') || (o instanceof Boolean)))
-                || ((t == 'string') && ((typeof o == 'string') || (o instanceof String)))
-                || ((t == 'number') && ((typeof o == 'number') || (o instanceof Number)))
-                || ((t == 'function') && (typeof o == 'function'))
-                || ((t == 'object') && (typeof o == 'object') && (o instanceof Object))
-                || ((t == 'array') && (typeof o == 'object') && (o instanceof Array))
-                || ((t == 'date') && (typeof o == 'object') && (o instanceof Date));
+            || ((t == 'null') && (o === null))
+            || ((t == 'boolean') && ((typeof o == 'boolean') || (o instanceof Boolean)))
+            || ((t == 'string') && ((typeof o == 'string') || (o instanceof String)))
+            || ((t == 'number') && ((typeof o == 'number') || (o instanceof Number)))
+            || ((t == 'function') && (typeof o == 'function'))
+            || ((t == 'object') && (typeof o == 'object') && (o instanceof Object))
+            || ((t == 'array') && (typeof o == 'object') && (o instanceof Array))
+            || ((t == 'date') && (typeof o == 'object') && (o instanceof Date));
     }
 }
 
@@ -364,14 +363,14 @@ function S(el, ns, attr, st) {
     return res;
     function is(o, t) {
         return ((t == 'undefined') && (o === undefined))
-                || ((t == 'null') && (o === null))
-                || ((t == 'boolean') && ((typeof o == 'boolean') || (o instanceof Boolean)))
-                || ((t == 'string') && ((typeof o == 'string') || (o instanceof String)))
-                || ((t == 'number') && ((typeof o == 'number') || (o instanceof Number)))
-                || ((t == 'function') && (typeof o == 'function'))
-                || ((t == 'object') && (typeof o == 'object') && (o instanceof Object))
-                || ((t == 'array') && (typeof o == 'object') && (o instanceof Array))
-                || ((t == 'date') && (typeof o == 'object') && (o instanceof Date));
+            || ((t == 'null') && (o === null))
+            || ((t == 'boolean') && ((typeof o == 'boolean') || (o instanceof Boolean)))
+            || ((t == 'string') && ((typeof o == 'string') || (o instanceof String)))
+            || ((t == 'number') && ((typeof o == 'number') || (o instanceof Number)))
+            || ((t == 'function') && (typeof o == 'function'))
+            || ((t == 'object') && (typeof o == 'object') && (o instanceof Object))
+            || ((t == 'array') && (typeof o == 'object') && (o instanceof Array))
+            || ((t == 'date') && (typeof o == 'object') && (o instanceof Date));
     }
 }
 
