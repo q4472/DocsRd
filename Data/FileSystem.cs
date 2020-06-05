@@ -85,13 +85,13 @@ namespace DocsRd.Data
             }
             return r;
         }
-        public static DataTable GetFsInfo(String id)
+        public static DataTable GetFsInfo(String path)
         {
             RequestPackage rqp = new RequestPackage()
             {
                 Command = "[dbo].[рег_уд__файлы__get]",
                 Parameters = new RequestParameter[] {
-                    new RequestParameter("id", id )
+                    new RequestParameter("path", path )
                 }
             };
             DataTable dt = GetFirstTable(Execute(rqp));
