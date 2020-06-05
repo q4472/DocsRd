@@ -63,7 +63,7 @@ namespace DocsRd.Controllers
             {
                 result += ht.Count.ToString();
             }
-
+            Models.RdModel.SetFsInfo(ht);
             return result;
         }
     }

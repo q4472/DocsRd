@@ -1,5 +1,6 @@
 ﻿using Nskd;
 using System;
+using System.Collections;
 using System.Data;
 
 namespace DocsRd.Data
@@ -84,15 +85,33 @@ namespace DocsRd.Data
             }
             return r;
         }
-        public static DataTable GetFsInfoCommon(String fileId)
+        public static DataTable GetFsInfo(String id)
         {
-            RequestPackage rqp = new RequestPackage();
-            rqp.Command = "[dbo].[рег_уд__файлы__get]";
-            rqp.Parameters = new RequestParameter[] {
-                new RequestParameter("id", fileId )
+            RequestPackage rqp = new RequestPackage()
+            {
+                Command = "[dbo].[рег_уд__файлы__get]",
+                Parameters = new RequestParameter[] {
+                    new RequestParameter("id", id )
+                }
             };
             DataTable dt = GetFirstTable(Execute(rqp));
             return dt;
+        }
+        public static void SetFsInfo(Hashtable data)
+        {
+            RequestPackage rqp = new RequestPackage()
+            {
+                Command = "[dbo].[рег_уд__файлы__set]",
+                Parameters = new RequestParameter[] {
+                    new RequestParameter("path", data.ContainsKey("path") ? data["path"] : null),
+                    new RequestParameter("номер", data.ContainsKey("номер") ? data["номер"] : null),
+                    new RequestParameter("дата_регистрации", data.ContainsKey("дата_регистрации") ? data["дата_регистрации"] : null),
+                    new RequestParameter("дата_перерегистрации", data.ContainsKey("дата_перерегистрации") ? data["дата_перерегистрации"] : null),
+                    new RequestParameter("дата_окончания", data.ContainsKey("дата_окончания") ? data["дата_окончания"] : null),
+                    new RequestParameter("комментарий", data.ContainsKey("комментарий") ? data["комментарий"] : null)
+                }
+            };
+            Execute(rqp);
         }
     }
 }

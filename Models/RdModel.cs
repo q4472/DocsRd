@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Data;
 using System.Security.Cryptography;
 using System.Text;
@@ -15,8 +16,12 @@ namespace DocsRd.Models
             StringBuilder sb = new StringBuilder();
             foreach (Byte b in hash) { sb.AppendFormat("{0:x2}", b); }
             String id = sb.ToString();
-            dt = Data.Fs.GetFsInfoCommon(id);
+            dt = Data.Fs.GetFsInfo(id);
             return dt;
+        }
+        public static void SetFsInfo(Hashtable data)
+        {
+            Data.Fs.SetFsInfo(data);
         }
     }
 }

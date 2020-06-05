@@ -2,24 +2,24 @@
 @model DataTable
 @{
     String id = "";
-    String номер_документа = "";
-    String дата_документа = "";
+    String номер = "";
+    String дата_регистрации = "";
     String дата_перерегистрации = "";
     String дата_окончания = "";
-    String коментарий = "";
+    String комментарий = "";
     if (Model.Rows.Count == 1)
     {
         id = (String)Model.Rows[0]["id"];
-        if (Model.Rows[0]["номер_документа"] != DBNull.Value)
-            номер_документа = (String)Model.Rows[0]["номер_документа"];
-        if (Model.Rows[0]["дата_документа"] != DBNull.Value)
-            дата_документа = ((DateTime)Model.Rows[0]["дата_документа"]).ToString("dd.MM.yyyy");
+        if (Model.Rows[0]["номер"] != DBNull.Value)
+            номер = (String)Model.Rows[0]["номер"];
+        if (Model.Rows[0]["дата_регистрации"] != DBNull.Value)
+            дата_регистрации = ((DateTime)Model.Rows[0]["дата_регистрации"]).ToString("dd.MM.yyyy");
         if (Model.Rows[0]["дата_перерегистрации"] != DBNull.Value)
             дата_перерегистрации = ((DateTime)Model.Rows[0]["дата_перерегистрации"]).ToString("dd.MM.yyyy");
         if (Model.Rows[0]["дата_окончания"] != DBNull.Value)
             дата_окончания = ((DateTime)Model.Rows[0]["дата_окончания"]).ToString("dd.MM.yyyy");
-        if (Model.Rows[0]["коментарий"] != DBNull.Value)
-            коментарий = (String)Model.Rows[0]["коментарий"];
+        if (Model.Rows[0]["комментарий"] != DBNull.Value)
+            комментарий = (String)Model.Rows[0]["комментарий"];
     }
 }
 <style type="text/css">
@@ -58,11 +58,11 @@
         </tr>
         <tr class="edit">
             <td class="header">Номер</td>
-            <td class="data"><input type="text" name="номер_документа" value="@номер_документа" /></td>
+            <td class="data"><input type="text" name="номер" value="@номер" /></td>
         </tr>
         <tr class="edit">
             <td class="header">Дата регистрации</td>
-            <td class="data"><input type="date" name="дата_документа" value="@дата_документа" /></td>
+            <td class="data"><input type="date" name="дата_регистрации" value="@дата_регистрации" /></td>
         </tr>
         <tr class="edit">
             <td class="header">Дата перерегистрации</td>
@@ -73,8 +73,8 @@
             <td class="data"><input type="date" name="дата_окончания" value="@дата_окончания" /></td>
         </tr>
         <tr class="edit">
-            <td class="header">Коментарий</td>
-            <td class="data"><input type="text" name="коментарий" value="@коментарий" /></td>
+            <td class="header">Комментарий</td>
+            <td class="data"><input type="text" name="комментарий" value="@комментарий" /></td>
         </tr>
     </table>
 </div>
@@ -83,11 +83,11 @@
         let mainDiv = $('div#views_rd_inf');
         let saveButton = mainDiv.find('input[type="button"]');
         let id = mainDiv.find('input[name="id"]');
-        let номер_документа = mainDiv.find('input[name="номер_документа"]');
-        let дата_документа = mainDiv.find('input[name="дата_документа"]');
+        let номер = mainDiv.find('input[name="номер"]');
+        let дата_регистрации = mainDiv.find('input[name="дата_регистрации"]');
         let дата_перерегистрации = mainDiv.find('input[name="дата_перерегистрации"]');
         let дата_окончания = mainDiv.find('input[name="дата_окончания"]');
-        let коментарий = mainDiv.find('input[name="коментарий"]');
+        let комментарий = mainDiv.find('input[name="комментарий"]');
 
         mainDiv.find('input[type="date"]').keyup(function () {
             let e = $(this);
@@ -125,23 +125,23 @@
             saveButton.prop('disabled', true);
             let data = {
                 id: id.val(),
-                ссылка: $('div#views_home_rd_index > div.inf > div.path').text(),
-                номер_документа: номер_документа.val(),
-                дата_документа: (дата_документа.hasClass('err')) ? '' : дата_документа.val(),
+                path: $('div#views_home_rd_index > div.inf > div.path').text(),
+                номер: номер.val(),
+                дата_регистрации: (дата_регистрации.hasClass('err')) ? '' : дата_регистрации.val(),
                 дата_перерегистрации: (дата_перерегистрации.hasClass('err')) ? '' : дата_перерегистрации.val(),
                 дата_окончания: (дата_окончания.hasClass('err')) ? '' : дата_окончания.val(),
-                коментарий: коментарий.val()
+                комментарий: комментарий.val()
             };
             data = 'data=' + Nskd.Json.toString(data);
             //alert(data);
             $.post('/rd/set', data, function (data) {
                 alert(data);
             });
-            номер_документа.removeClass('changed').val('');
-            дата_документа.removeClass('changed').removeClass('err').val('');
+            номер.removeClass('changed').val('');
+            дата_регистрации.removeClass('changed').removeClass('err').val('');
             дата_перерегистрации.removeClass('changed').removeClass('err').val('');
             дата_окончания.removeClass('changed').removeClass('err').val('');
-            коментарий.removeClass('changed').val('');
+            комментарий.removeClass('changed').val('');
         });
     })();
 </script>
